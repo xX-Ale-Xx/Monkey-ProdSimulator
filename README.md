@@ -1,2 +1,4 @@
-# -IPC1-S12023_Practica2_202200392
-software de simulación "Monkey"
+Nombre: Javier Alejandro Avila Flores<br>
+Carnet: 202200392<br>
+IPC1 seccion D
+
