@@ -4,11 +4,14 @@
  */
 package com.inicio;
 
+import com.ClasesPrograma.costoDeSectores;
 import java.awt.Color;
 import javax.swing.JOptionPane;
-
+import com.simulacion.simulacion;
 
 public class Menu extends javax.swing.JFrame {
+    
+   
 int xMouse, yMouse;
     /**
      * Creates new form Menu
@@ -17,8 +20,29 @@ int xMouse, yMouse;
         initComponents();
         this.setLocationRelativeTo(null);
     }
-    
-    
+    private boolean camposLLenos(){
+        
+        String msj = "";
+        
+        if(inventarioTiempoTxt.getText().isEmpty() || Integer.parseInt(inventarioTiempoTxt.getText())<=0)msj+="Tiempo del inventario obligatorio\n";
+        if(inventarioCostoTxt.getText().isEmpty() || Integer.parseInt(inventarioCostoTxt.getText())<=0)msj+="Costo del inventario obligatorio\n";
+        if(ProduTiempoTxt.getText().isEmpty() || Integer.parseInt(ProduTiempoTxt.getText())<=0)msj+="Tiempo de produccion obligatorio\n";
+        if(ProduCostoTxt.getText().isEmpty() || Integer.parseInt(ProduCostoTxt.getText())<=0)msj+="Costo de produccion obligatorio\n";
+        if(EmpaqueCostoTxt.getText().isEmpty() || Integer.parseInt(EmpaqueTiempoTxt.getText())<=0)msj+="Costo de empaquetado obligatorio\n";
+        if(EmpaqueTiempoTxt.getText().isEmpty() || Integer.parseInt(EmpaqueCostoTxt.getText())<=0)msj+="Tiempo de empaquetado obligatorio\n";
+        if(SalidaTiempoTxt.getText().isEmpty() || Integer.parseInt(SalidaTiempoTxt.getText())<=0)msj+="Tiempo de salida obligatorio\n";
+        if(SalidaCostoTxt.getText().isEmpty() || Integer.parseInt(SalidaCostoTxt.getText())<=0)msj+="Costo de salida obligatorio\n";
+        if(!msj.equals("")){
+            mensaje(msj);
+            return false;
+        }
+        return true;
+        
+        
+    } 
+    private void mensaje(String mensaje){
+        JOptionPane.showMessageDialog(null, mensaje);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -78,6 +102,11 @@ int xMouse, yMouse;
         IniciarBtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         IniciarBtn.setBorderPainted(false);
         IniciarBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        IniciarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                IniciarBtnActionPerformed(evt);
+            }
+        });
 
         inventarioTiempoTxt.setBackground(new java.awt.Color(255, 255, 255));
         inventarioTiempoTxt.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
@@ -330,9 +359,9 @@ int xMouse, yMouse;
                                                 .addComponent(EmpaqueCostoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addComponent(SalidaCostoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addGap(134, 134, 134)
+                                            .addGap(167, 167, 167)
                                             .addComponent(jLabel8)
-                                            .addGap(84, 84, 84)
+                                            .addGap(85, 85, 85)
                                             .addComponent(jLabel9))))
                                 .addGap(40, 40, 40)
                                 .addComponent(jLabel3))
@@ -347,12 +376,12 @@ int xMouse, yMouse;
                         .addGap(36, 36, 36)
                         .addComponent(jLabel2))
                     .addComponent(jLabel1))
-                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel3))
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
                             .addComponent(jLabel9))
@@ -378,7 +407,7 @@ int xMouse, yMouse;
                             .addComponent(jLabel7))
                         .addGap(34, 34, 34)
                         .addComponent(IniciarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 39, Short.MAX_VALUE))))
+                        .addGap(0, 54, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -633,6 +662,22 @@ int xMouse, yMouse;
         xMouse = evt.getX();
         yMouse = evt.getY();
     }//GEN-LAST:event_headerMousePressed
+
+    private void IniciarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IniciarBtnActionPerformed
+        // TODO add your handling code here:
+        if(camposLLenos()){
+    costoDeSectores inventario = new costoDeSectores(Integer.parseInt(inventarioTiempoTxt.getText()),Integer.parseInt(inventarioCostoTxt.getText()));
+    costoDeSectores produccion = new costoDeSectores(Integer.parseInt(ProduTiempoTxt.getText()),Integer.parseInt(ProduCostoTxt.getText()));
+    costoDeSectores empaquetado = new costoDeSectores(Integer.parseInt(EmpaqueTiempoTxt.getText()),Integer.parseInt(EmpaqueCostoTxt.getText()));
+    costoDeSectores salida = new costoDeSectores(Integer.parseInt(SalidaTiempoTxt.getText()),Integer.parseInt(SalidaCostoTxt.getText()));
+    
+    simulacion ventanaSimulacion = new simulacion();
+    ventanaSimulacion.setDatos(inventario, produccion, empaquetado, salida);
+    ventanaSimulacion.setVisible(true);
+    this.dispose();
+    
+        }
+    }//GEN-LAST:event_IniciarBtnActionPerformed
 
     /**
      * @param args the command line arguments
