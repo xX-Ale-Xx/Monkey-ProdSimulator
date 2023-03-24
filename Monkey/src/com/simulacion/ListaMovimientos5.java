@@ -22,8 +22,9 @@ public class ListaMovimientos5  extends  Thread{
     int cantidad;
     int contador;
     JFrame panel;
+    Cronometro tiempo;
 
-    public ListaMovimientos5(JFrame panel) {
+    public ListaMovimientos5(JFrame panel, Cronometro tiempo) {
         //this.circulo = circulo;
         this.posInicialX = 570;
         this.posFinalX = 720;
@@ -35,6 +36,7 @@ public class ListaMovimientos5  extends  Thread{
         this.cantidad = 30;
         this.contador =0;
         this.panel =panel;
+        this.tiempo = tiempo;
     }
     
     
@@ -45,9 +47,16 @@ public class ListaMovimientos5  extends  Thread{
             try {
                 Thread.sleep(veocidadGenerar);
                 
-                if(contador<cantidad)CrearCirculo();
+                if(contador<cantidad)
+                    CrearCirculo();
+                else{
+                    Thread.sleep(1000);
+                    tiempo.detener();
+                    ejecutar=false;
+                }
+                
             } catch (InterruptedException ex) {
-                Logger.getLogger(ListaMovimientos5.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println(ex);
             }
         }
  

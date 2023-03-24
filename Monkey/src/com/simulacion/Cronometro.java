@@ -13,20 +13,25 @@ import javax.swing.JLabel;
  * @author Carol
  */
 public class Cronometro extends Thread{
-    
+    JLabel minutos;
     JLabel segundos;
    int seg;
     private boolean ejecutar;
     int segundosT;
+    private int min;
 
-    public Cronometro(JLabel segundos, int seg) {
+    public Cronometro(JLabel minutos,JLabel segundos, int seg) {
         this.segundos = segundos;
-        int segundosT = seg;
+        this.segundosT = seg;
         this.ejecutar = true;
+        this.minutos =minutos;
     this.seg =0;
+    this.min=0;
     }
     
-    
+    public void detener(){
+        ejecutar=false;
+    }
     
     @Override
     public void run(){
@@ -34,13 +39,20 @@ public class Cronometro extends Thread{
         while (ejecutar) {            
             try {
                 Thread.sleep(1000);
-                if(seg<this.segundosT){
+                if(seg<60){
+                    
                 segundos.setText(String.valueOf(seg));
                 seg++;
                 }
-                if(seg==this.segundosT){
-                    ejecutar=false;
+                if(seg==60){
+                    min++;
+                    seg=0;
+                    segundos.setText(String.valueOf(seg));
+                    minutos.setText(String.valueOf(min));
                 }
+                
+                   
+                
             } catch (InterruptedException ex) {
                 Logger.getLogger(Cronometro.class.getName()).log(Level.SEVERE, null, ex);
             }

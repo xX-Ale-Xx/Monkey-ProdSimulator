@@ -59,7 +59,7 @@ private Thread tiempo = null;
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        minutosTxt = new javax.swing.JLabel();
         Segundos = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         circulo1 = new javax.swing.JLabel();
@@ -104,9 +104,9 @@ private Thread tiempo = null;
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText(":");
 
-        jLabel8.setFont(new java.awt.Font("Roboto", 1, 36)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("00");
+        minutosTxt.setFont(new java.awt.Font("Roboto", 1, 36)); // NOI18N
+        minutosTxt.setForeground(new java.awt.Color(255, 255, 255));
+        minutosTxt.setText("00");
 
         Segundos.setFont(new java.awt.Font("Roboto", 1, 36)); // NOI18N
         Segundos.setForeground(new java.awt.Color(255, 255, 255));
@@ -120,11 +120,11 @@ private Thread tiempo = null;
                 .addContainerGap()
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 258, Short.MAX_VALUE)
-                .addComponent(Segundos)
+                .addComponent(minutosTxt)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel8)
+                .addComponent(Segundos)
                 .addGap(248, 248, 248)
                 .addComponent(jButton2))
         );
@@ -140,7 +140,7 @@ private Thread tiempo = null;
                         .addGap(20, 20, 20)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(jLabel8)
+                            .addComponent(minutosTxt)
                             .addComponent(Segundos))))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
@@ -303,12 +303,12 @@ private Thread tiempo = null;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JLabel minutosTxt;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -320,23 +320,23 @@ private Thread tiempo = null;
         int totalT=inventario.getTiempo()+produccion.getTiempo()+empaquetado.getTiempo()+salida.getTiempo();
          while (tiempo!=null) {
          try {
-             this.Segundos.setText(String.valueOf(totalT));
-             Cronometro seg = new Cronometro(Segundos, totalT );
+            
+             Cronometro seg = new Cronometro(minutosTxt,Segundos, totalT );
              seg.start();
 
              ListaMovimientos1 h1 = new ListaMovimientos1(this);
              h1.start();
-             Thread.sleep(1000+tiempoi);
+             Thread.sleep(500+tiempoi);
              ListaMovimientos2 mov2 = new ListaMovimientos2(this);
           mov2.start();
-          Thread.sleep(1000+tiempoi+tiempoP);
+          Thread.sleep(1500+tiempoP);
           ListaMovimientos3 mov3 = new ListaMovimientos3(this);
           mov3.start();
-          Thread.sleep(1000+tiempoi+tiempoP+tiempoE);
+          Thread.sleep(1500+tiempoE);
           ListaMovimientos4 mov4 = new ListaMovimientos4(this);
           mov4.start();
-          Thread.sleep(1000+tiempoi+tiempoP+tiempoE+tiempoS);
-          ListaMovimientos5 mov5 = new ListaMovimientos5(this);
+          Thread.sleep(1500+tiempoS);
+          ListaMovimientos5 mov5 = new ListaMovimientos5(this, seg);
           mov5.start();
           Thread.sleep(5000);
           tiempo=null;
